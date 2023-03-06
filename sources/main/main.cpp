@@ -37,19 +37,23 @@ main()
     crow::SimpleApp app;
 
     CROW_ROUTE(app, "/")([](){ 
-        auto page = crow::mustache::load_text("main.html"); 
-        return page;
+        auto page2 = crow::mustache::load_text("main.html"); 
+        return page2;
     });
 
     CROW_ROUTE(app, "/sum")
         .methods("POST"_method)(
             [&](const crow::request& req)
             {
-                std::vector<int> num(2);
-                num[0] = stoi(parsFun(req.body)[0]);
-                num[1] = stoi(parsFun(req.body)[1]);
-                std::cout << "sus\\n";
-                return std::to_string(num[0]+num[1]);
+                auto page = crow::mustache::load_text("main.html"); 
+                std::vector<int> num12(2);
+                num12[0] = stoi(parsFun(req.body)[0]);
+                num12[1] = stoi(parsFun(req.body)[1]);
+                int nnn = num12[0]+num12[1];
+                std::string cdcdb = std::to_string(nnn);
+                //crow::mustache::context ctx ({{"result", b}});
+                //return page.render(ctx);
+                return crow::response {404};
             });
 
     
